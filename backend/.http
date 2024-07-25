@@ -15,3 +15,13 @@ Content-Type: application/json
   "email": "israel@dev.com",
   "password": "12345678"
 }
+
+###
+POST http://localhost:3033/teacher/4574cfe6-b34f-40b9-b41e-97ea19e5259d/student
+Content-Type: application/json
+
+{
+  "name": "Aluna",
+  "email": "aluna@dev.com",
+  "courseId": "fd549220-11ba-4df5-bd3b-0878b409e9e4"
+}
