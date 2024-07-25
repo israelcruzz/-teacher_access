@@ -22,7 +22,6 @@ model Student {
   id        String   @id @default(uuid())
   name      String
   email     String
-  image     String?
   createdAt DateTime @default(now())
   teacherId String
   courseId  String

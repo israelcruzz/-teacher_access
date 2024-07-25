@@ -1,0 +1,8 @@
+POST http://localhost:3033/teacher 
+Content-Type: application/json
+
+{
+  "name": "Israel Cruz",
+  "email": "israel@dev.com",
+  "password": "12345678"
+}
