@@ -1,4 +1,4 @@
-[] Rota para criar conta
+[x] Rota para criar conta
 [] Rota para autenticar
 [] Rota para mostrar estudantes de um professor
 [] Rota de filtragem de estudantes por curso

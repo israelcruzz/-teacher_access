@@ -6,3 +6,12 @@ Content-Type: application/json
   "email": "israel@dev.com",
   "password": "12345678"
 }
+
+###
+POST http://localhost:3033/teacher/auth
+Content-Type: application/json
+
+{
+  "email": "israel@dev.com",
+  "password": "12345678"
+}

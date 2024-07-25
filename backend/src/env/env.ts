@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
+  PORT: z.coerce.number().default(3033),
   JWT_SECRET: z.coerce.string(),
 });
 
@@ -10,4 +11,4 @@ if (_env.success === false) {
   throw new Error("Enviroment Variables Not Found");
 }
 
-export const env = _env;
+export const env = _env.data;
