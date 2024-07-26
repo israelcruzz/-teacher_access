@@ -2,7 +2,7 @@
 [X] Rota para autenticar
 [X] Rota para mostrar estudantes de um professor
 [X] Rota de filtragem de estudantes por curso
-[] Rota de filtragem de estudantes por nome
+[X] Rota de filtragem de estudantes por nome
 [X] Rota para adicionar um estudante de um professor
 [] Rota para deletar um estudante de um professor
 [] Rota para atualizar um estudante de um professor
