@@ -10,6 +10,7 @@ import { env } from "./env/env";
 import { teacherAuth } from "./routes/auth/teacher-auth";
 import { createStudent } from "./routes/student/create-student";
 import { findStudents } from "./routes/student/find-students";
+import { findStudentPerCourse } from "./routes/student/find-student-per-course";
 
 const app = fastify();
 
@@ -28,5 +29,6 @@ app.register(createTeacher);
 app.register(teacherAuth);
 app.register(createStudent);
 app.register(findStudents);
+app.register(findStudentPerCourse)
 
 app.listen({ port: env.PORT }).then(() => console.log(`🚀 Server Running in http://localhost:${env.PORT}`));
