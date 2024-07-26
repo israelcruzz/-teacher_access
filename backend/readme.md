@@ -12,5 +12,3 @@
 [X] Rota para exibir cursos
 [X] Rota para criar um curso
 [] Rota para enviar lição
-[] Rota de convite de um professor para um aluno
-[] Rota para um estudante criar sua conta

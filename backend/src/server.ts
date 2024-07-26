@@ -19,6 +19,8 @@ import { updateTeacherPassword } from "./routes/teacher/update-teacher-password"
 import { updateTeacher } from "./routes/teacher/update-teacher";
 import { createCourse } from "./routes/course/create-course";
 import { findCourses } from "./routes/course/find-courses";
+import { sendLeason } from "./routes/teacher/send-leason";
+import multipart from "@fastify/multipart";
 
 const app = fastify();
 
@@ -33,6 +35,8 @@ app.register(cors, {
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
+app.register(multipart);
+
 app.register(createTeacher);
 app.register(teacherAuth);
 app.register(createStudent);
@@ -46,6 +50,7 @@ app.register(updateTeacherPassword);
 app.register(updateTeacher);
 app.register(createCourse);
 app.register(findCourses);
+app.register(sendLeason);
 
 app
   .listen({ port: env.PORT })
