@@ -50,3 +50,12 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3033/teacher/4574cfe6-b34f-40b9-b41e-97ea19e5259d
+
+###
+PATCH http://localhost:3033/teacher/4574cfe6-b34f-40b9-b41e-97ea19e5259d
+Content-Type: application/json
+
+{
+  "recentPassword": "12345678",
+  "newPassword": "israel2006"
+}
