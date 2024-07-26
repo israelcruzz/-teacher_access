@@ -5,20 +5,19 @@ import { db } from "../../lib/prisma";
 
 export async function findStudentsPerName(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    "/teacher/:teacherId/student",
+    "/teacher/student",
     {
       schema: {
         querystring: z.object({
           name: z.string(),
         }),
-        params: z.object({
-          teacherId: z.string().uuid(),
-        }),
       },
     },
     async (request) => {
+      await request.jwtVerify();
+
       const { name } = request.query;
-      const { teacherId } = request.params;
+      const teacherId = request.user.sub;
 
       const teacher = await db.teacher.findUnique({
         where: {

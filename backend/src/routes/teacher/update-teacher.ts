@@ -5,12 +5,9 @@ import { db } from "../../lib/prisma";
 
 export async function updateTeacher(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().put(
-    "/teacher/:teacherId",
+    "/teacher",
     {
       schema: {
-        params: z.object({
-          teacherId: z.string().uuid(),
-        }),
         body: z.object({
           name: z.string().min(3),
           email: z.string().email(),
@@ -18,8 +15,10 @@ export async function updateTeacher(app: FastifyInstance) {
       },
     },
     async (request) => {
+      await request.jwtVerify();
+
       const { name, email } = request.body;
-      const { teacherId } = request.params;
+      const teacherId = request.user.sub;
 
       const existingTeacher = await db.teacher.findUnique({
         where: {

@@ -6,12 +6,9 @@ import bcryptjs from "bcryptjs";
 
 export async function updateTeacherPassword(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().patch(
-    "/teacher/:teacherId",
+    "/teacher",
     {
       schema: {
-        params: z.object({
-          teacherId: z.string().uuid(),
-        }),
         body: z.object({
           recentPassword: z.string().min(8),
           newPassword: z.string().min(8),
@@ -19,8 +16,10 @@ export async function updateTeacherPassword(app: FastifyInstance) {
       },
     },
     async (request) => {
+      await request.jwtVerify();
+
       const { newPassword, recentPassword } = request.body;
-      const { teacherId } = request.params;
+      const teacherId = request.user.sub;
 
       const teacher = await db.teacher.findUnique({
         where: {

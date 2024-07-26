@@ -6,7 +6,7 @@ import bcryptjs from "bcryptjs";
 
 export async function teacherAuth(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/teacher/auth",
+    "/auth",
     {
       schema: {
         body: z.object({
@@ -46,7 +46,15 @@ export async function teacherAuth(app: FastifyInstance) {
         }
       );
 
-      return { token };
+      return {
+        token,
+        teacher: {
+          id: teacher.id,
+          name: teacher.name,
+          email: teacher.email,
+          createdAt: teacher.createdAt,
+        },
+      };
     }
   );
 }

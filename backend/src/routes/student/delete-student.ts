@@ -5,17 +5,19 @@ import { db } from "../../lib/prisma";
 
 export async function deleteStudent(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
-    "/teacher/:teacherId/students/:studentId",
+    "/teacher/students/:studentId",
     {
       schema: {
         params: z.object({
-          teacherId: z.string().uuid(),
           studentId: z.string().uuid(),
         }),
       },
     },
     async (request) => {
-      const { studentId, teacherId } = request.params;
+      await request.jwtVerify();
+
+      const { studentId } = request.params;
+      const teacherId = request.user.sub;
 
       const existingTeacher = await db.teacher.findUnique({
         where: {

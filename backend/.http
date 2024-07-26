@@ -2,8 +2,8 @@ POST http://localhost:3033/teacher
 Content-Type: application/json
 
 {
-  "name": "Israel Cruz",
-  "email": "israel@dev.com",
+  "name": "Flávia",
+  "email": "flavia@dev.com",
   "password": "12345678"
 }
 
@@ -12,7 +12,7 @@ POST http://localhost:3033/teacher/auth
 Content-Type: application/json
 
 {
-  "email": "israel@dev.com",
+  "email": "flavia@dev.com",
   "password": "12345678"
 }
 
@@ -86,3 +86,5 @@ Content-Type: application/json
   "leason": "Faça as tarefas da seguinte página",
   "courseId": "fd549220-11ba-4df5-bd3b-0878b409e9e4"
 }
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMGE0ZjY5OS0yNjk0LTRhNzctODEwYS00ZmMwMDBiMGQ1MzAiLCJpYXQiOjE3MjE5Nzg3MzR9.wm75Ya-7Z61IE4KK-DfgCNkNXl9Suz7XUCqriv62K4Q

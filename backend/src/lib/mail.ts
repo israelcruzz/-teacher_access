@@ -15,6 +15,5 @@ export async function mail({ to, subject, html }: MailParams) {
     to,
     subject,
     html,
-    
   });
 }

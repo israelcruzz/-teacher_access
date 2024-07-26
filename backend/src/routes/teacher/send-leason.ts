@@ -6,12 +6,9 @@ import { mail } from "../../lib/mail";
 
 export async function sendLeason(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/teacher/:teacherId/leason",
+    "/teacher/leason",
     {
       schema: {
-        params: z.object({
-          teacherId: z.string().uuid(),
-        }),
         body: z.object({
           nameLeason: z.string(),
           leason: z.string(),
@@ -20,7 +17,9 @@ export async function sendLeason(app: FastifyInstance) {
       },
     },
     async (request) => {
-      const { teacherId } = request.params;
+      await request.jwtVerify();
+
+      const teacherId = request.user.sub;
       const { nameLeason, leason, courseId } = request.body;
 
       const existingTeacher = await db.teacher.findUnique({
@@ -73,6 +72,8 @@ export async function sendLeason(app: FastifyInstance) {
           studentsEmails.push(student.email)
         );
       }
+
+      console.log(studentsEmails);
 
       await mail({
         to: studentsEmails,

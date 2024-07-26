@@ -5,11 +5,10 @@ import { db } from "../../lib/prisma";
 
 export async function updateStudent(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().put(
-    "/teacher/:teacherId/students/:studentId",
+    "/teacher/students/:studentId",
     {
       schema: {
         params: z.object({
-          teacherId: z.string().uuid(),
           studentId: z.string().uuid(),
         }),
         body: z.object({
@@ -20,8 +19,11 @@ export async function updateStudent(app: FastifyInstance) {
       },
     },
     async (request) => {
+      await request.jwtVerify();
+
       const { email, name, courseId } = request.body;
-      const { teacherId, studentId } = request.params;
+      const { studentId } = request.params;
+      const teacherId = request.user.sub;
 
       const existingStudent = await db.student.findUnique({
         where: {
@@ -34,7 +36,7 @@ export async function updateStudent(app: FastifyInstance) {
           id: courseId,
         },
       });
-      
+
       const existingTeacher = await db.teacher.findUnique({
         where: {
           id: teacherId,
@@ -48,7 +50,6 @@ export async function updateStudent(app: FastifyInstance) {
       if (!existingStudent) {
         throw new Error("Student Not Found");
       }
-
 
       if (!existingTeacher) {
         throw new Error("Teacher Id Invavlid");

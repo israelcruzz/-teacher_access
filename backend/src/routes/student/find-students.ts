@@ -1,20 +1,14 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
-import z from "zod";
 import { db } from "../../lib/prisma";
 
 export async function findStudents(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().get(
-    "/teacher/:teacherId/students",
-    {
-      schema: {
-        params: z.object({
-          teacherId: z.string().uuid(),
-        }),
-      },
-    },
-    async (request) => {
-      const { teacherId } = request.params;
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .get("/teacher/students", async (request) => {
+      await request.jwtVerify();
+
+      const teacherId = request.user.sub;
 
       const teacher = await db.teacher.findUnique({
         where: {
@@ -46,6 +40,5 @@ export async function findStudents(app: FastifyInstance) {
           };
         }),
       };
-    }
-  );
+    });
 }
