@@ -68,3 +68,11 @@ Content-Type: application/json
   "name": "Israel",
   "email": "israel@professor.dev"
 }
+
+###
+POST http://localhost:3033/course
+Content-Type: application/json
+
+{
+  "name": "Física"
+}
