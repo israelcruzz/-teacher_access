@@ -12,7 +12,7 @@ export async function findStudentsPerName(app: FastifyInstance) {
           name: z.string(),
         }),
         params: z.object({
-          teacherId: z.string(),
+          teacherId: z.string().uuid(),
         }),
       },
     },

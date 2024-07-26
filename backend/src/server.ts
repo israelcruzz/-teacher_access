@@ -13,6 +13,7 @@ import { findStudents } from "./routes/student/find-students";
 import { findStudentPerCourse } from "./routes/student/find-student-per-course";
 import { findStudentsPerName } from "./routes/student/find-student-per-name";
 import { deleteStudent } from "./routes/student/delete-student";
+import { updateStudent } from "./routes/student/update-student";
 
 const app = fastify();
 
@@ -31,8 +32,11 @@ app.register(createTeacher);
 app.register(teacherAuth);
 app.register(createStudent);
 app.register(findStudents);
-app.register(findStudentPerCourse)
-app.register(findStudentsPerName)
-app.register(deleteStudent)
+app.register(findStudentPerCourse);
+app.register(findStudentsPerName);
+app.register(deleteStudent);
+app.register(updateStudent);
 
-app.listen({ port: env.PORT }).then(() => console.log(`🚀 Server Running in http://localhost:${env.PORT}`));
+app
+  .listen({ port: env.PORT })
+  .then(() => console.log(`🚀 Server Running in http://localhost:${env.PORT}`));
