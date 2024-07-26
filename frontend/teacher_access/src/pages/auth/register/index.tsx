@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 export const Register = () => {
   return (
@@ -20,7 +21,7 @@ export const Register = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-        <div className="grid gap-2">
+          <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
@@ -54,12 +55,12 @@ export const Register = () => {
             <Button className="w-full">Create</Button>
           </div>
 
-          <a
-            href="#"
+          <Link
+            to="/"
             className="text-center text-sm text-muted-foreground hover:underline"
           >
             Login
-          </a>
+          </Link>
         </CardContent>
       </Card>
     </main>

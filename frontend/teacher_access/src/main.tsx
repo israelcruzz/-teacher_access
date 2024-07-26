@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { Register } from './pages/auth/register/index.tsx'
+import { AuthRoutes } from './routes/auth-routes/auth-routes.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Register />
+    <AuthRoutes />
   </React.StrictMode>,
 )

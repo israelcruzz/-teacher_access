@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   return (
@@ -44,12 +45,12 @@ export const Login = () => {
             <Button className="w-full">Login</Button>
           </div>
 
-          <a
-            href="#"
+          <Link
+            to="/register"
             className="text-center text-sm text-muted-foreground hover:underline"
           >
             Register
-          </a>
+          </Link>
         </CardContent>
       </Card>
     </main>
