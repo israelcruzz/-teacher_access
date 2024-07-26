@@ -6,7 +6,7 @@
 [X] Rota para adicionar um estudante de um professor
 [X] Rota para deletar um estudante de um professor
 [X] Rota para atualizar um estudante de um professor
-[] Rota para exibir perfil de um professor
+[X] Rota para exibir perfil de um professor
 [] Rota para editar perfil de um professor
 [] Rota para enviar lição
 [] Rota para exibir cursos
