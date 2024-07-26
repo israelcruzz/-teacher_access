@@ -15,7 +15,8 @@ import { findStudentsPerName } from "./routes/student/find-student-per-name";
 import { deleteStudent } from "./routes/student/delete-student";
 import { updateStudent } from "./routes/student/update-student";
 import { findTeacher } from "./routes/teacher/find-teacher";
-import { updateTeacherPassword } from "./routes/teacher/update-teacher";
+import { updateTeacherPassword } from "./routes/teacher/update-teacher-password";
+import { updateTeacher } from "./routes/teacher/update-teacher";
 
 const app = fastify();
 
@@ -40,6 +41,7 @@ app.register(deleteStudent);
 app.register(updateStudent);
 app.register(findTeacher);
 app.register(updateTeacherPassword);
+app.register(updateTeacher);
 
 app
   .listen({ port: env.PORT })

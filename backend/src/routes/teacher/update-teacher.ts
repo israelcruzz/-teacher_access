@@ -2,10 +2,9 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { db } from "../../lib/prisma";
-import bcryptjs from "bcryptjs";
 
-export async function updateTeacherPassword(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().patch(
+export async function updateTeacher(app: FastifyInstance) {
+  app.withTypeProvider<ZodTypeProvider>().put(
     "/teacher/:teacherId",
     {
       schema: {
@@ -13,42 +12,32 @@ export async function updateTeacherPassword(app: FastifyInstance) {
           teacherId: z.string().uuid(),
         }),
         body: z.object({
-          recentPassword: z.string().min(8),
-          newPassword: z.string().min(8),
+          name: z.string().min(3),
+          email: z.string().email(),
         }),
       },
     },
     async (request) => {
-      const { newPassword, recentPassword } = request.body;
+      const { name, email } = request.body;
       const { teacherId } = request.params;
 
-      const teacher = await db.teacher.findUnique({
+      const existingTeacher = await db.teacher.findUnique({
         where: {
           id: teacherId,
         },
       });
 
-      if (!teacher) {
+      if (!existingTeacher) {
         throw new Error("Teacher Not Found");
       }
 
-      const comparePassword = await bcryptjs.compare(
-        recentPassword,
-        teacher.password
-      );
-
-      if (!comparePassword) {
-        throw new Error("Passoword Invalid");
-      }
-
-      const hashNewPassoword = await bcryptjs.hash(newPassword, 6)
-
-      await db.teacher.update({
+      const teacher = await db.teacher.update({
         where: {
           id: teacherId,
         },
         data: {
-          password: hashNewPassoword,
+          name,
+          email,
         },
       });
 
