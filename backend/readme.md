@@ -9,7 +9,7 @@
 [X] Rota para exibir perfil de um professor
 [X] Rota para editar a senha de um professor
 [X] Rota para editar perfil de um professor
-[] Rota para exibir cursos
+[X] Rota para exibir cursos
 [X] Rota para criar um curso
 [] Rota para enviar lição
 [] Rota de convite de um professor para um aluno
