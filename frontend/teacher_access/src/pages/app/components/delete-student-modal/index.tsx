@@ -15,7 +15,7 @@ import { toast } from "sonner";
 interface DeleteStudentModalProps {
   deleteStudentModal: boolean;
   setDeleteStudentModal: Dispatch<SetStateAction<boolean>>;
-  deleteStudentId: boolean;
+  deleteStudentId: string;
 }
 
 export const DeleteStudentModal = ({
@@ -65,7 +65,7 @@ export const DeleteStudentModal = ({
                   />
                 </span>
               ) : (
-                "Create"
+                "Delete"
               )}
             </Button>
           </main>
