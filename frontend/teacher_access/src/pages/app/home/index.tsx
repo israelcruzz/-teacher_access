@@ -48,6 +48,7 @@ import { api } from "@/lib/api";
 import { CreateStudentModal } from "../components/create-student-modal";
 import { SendLeasonModal } from "../components/send-leason-modal";
 import { EditStudentModalProps } from "../components/edit-student-modal";
+import { DeleteStudentModal } from "../components/delete-student-moda";
 
 export interface Course {
   id: string;
@@ -191,28 +192,10 @@ export const Home = () => {
 
       <SendLeasonModal courses={courses} />
 
-      <Dialog open={deleteStudentModal} onOpenChange={setDeleteStudentModal}>
-        <DialogPortal>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Delete</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to delete? You cannot go back any further,
-                the decision is permanent
-              </DialogDescription>
-            </DialogHeader>
-            <main className="flex gap-2 justify-end">
-              <Button
-                variant={"outline"}
-                onClick={() => setDeleteStudentModal(false)}
-              >
-                Cancel
-              </Button>
-              <Button>Confirm</Button>
-            </main>
-          </DialogContent>
-        </DialogPortal>
-      </Dialog>
+      <DeleteStudentModal
+        deleteStudentModal={deleteStudentModal}
+        setDeleteStudentModal={setDeleteStudentModal}
+      />
 
       <EditStudentModalProps
         editStudentModal={editStudentModal}
