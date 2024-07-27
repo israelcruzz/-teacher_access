@@ -237,6 +237,7 @@ export const Home = () => {
       />
 
       <EditStudentModalProps
+        editStudentId={editStudentId}
         editStudentModal={editStudentModal}
         courses={courses}
         setEditStudentModal={setEditStudentModal}
