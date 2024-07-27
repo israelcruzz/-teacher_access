@@ -66,7 +66,7 @@ export const Home = () => {
   const [editStudentId, setEditStudentId] = useState<string>("");
   const [courses, setCourses] = useState<Course[]>([]);
   const [students, setStudents] = useState<Student[]>();
-  console.log(students);
+  const [query, setQuery] = useState<string>("");
 
   const handleOpenDeleteStudentModal = (id: string) => {
     setDeleteStudentId(id);
@@ -90,10 +90,21 @@ export const Home = () => {
     setStudents(students.data.students);
   };
 
+  const fetchStudentsWithQueryInApi = async () => {
+    const students = await api.get(`/teacher/student?name=${query}`);
+
+    setStudents(students.data.students);
+  };
+
   useEffect(() => {
     fetchCoursesInApi();
     fetchStudentsInApi();
+    console.log("rodou aki");
   }, []);
+
+  useEffect(() => {
+    fetchStudentsWithQueryInApi();
+  }, [query]);
 
   return (
     <main className="realative w-full py-8 px-6 flex flex-col">
@@ -124,11 +135,11 @@ export const Home = () => {
               type="text"
               className="bg-transparent outline-none flex-1"
               placeholder="Search student..."
+              onChange={(e) => setQuery(e.target.value)}
             />
           </div>
         </div>
       </header>
-
       <div className="mt-6 rounded-md border">
         <Table>
           <TableHeader>
