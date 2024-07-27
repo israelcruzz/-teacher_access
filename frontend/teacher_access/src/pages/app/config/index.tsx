@@ -127,7 +127,25 @@ export const Config = () => {
             </div>
           </section>
 
-          <Button variant="destructive">Delete</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="destructive">Delete</Button>
+            </DialogTrigger>
+            <DialogPortal>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Delete</DialogTitle>
+                  <DialogDescription>
+                    Are you sure you want to delete? You cannot go back any
+                    further, the decision is permanent
+                  </DialogDescription>
+                </DialogHeader>
+                <main className="flex gap-2 justify-end">
+                  <Button>Confirm</Button>
+                </main>
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
         </div>
 
         <Separator />
