@@ -44,8 +44,17 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 export const Home = () => {
+  const [deleteStudentModal, setDeleteStudentModal] = useState<boolean>(false);
+  const [deleteStudentId, setDeleteStudentId] = useState<string>("");
+
+  const handleOpenDeleteStudentModal = (id: string) => {
+    setDeleteStudentId(id);
+    setDeleteStudentModal(true);
+  };
+
   return (
     <main className="realative w-full py-8 px-6 flex flex-col">
       <header className="flex justify-between items-center">
@@ -60,7 +69,9 @@ export const Home = () => {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Create Studant</DialogTitle>
-                  <DialogDescription>Create studant per send leasons</DialogDescription>
+                  <DialogDescription>
+                    Create studant per send leasons
+                  </DialogDescription>
                 </DialogHeader>
                 <form className="flex flex-col gap-4">
                   <div className="flex flex-col gap-2">
@@ -152,7 +163,11 @@ export const Home = () => {
                         <DropdownMenuLabel>Israel Cruz</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => handleOpenDeleteStudentModal(i.toString())}
+                        >
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -224,6 +239,30 @@ export const Home = () => {
                 <Button className="mt-2">Send</Button>
               </div>
             </form>
+          </DialogContent>
+        </DialogPortal>
+      </Dialog>
+
+      <Dialog open={deleteStudentModal} onOpenChange={setDeleteStudentModal}>
+        <DialogTrigger asChild></DialogTrigger>
+        <DialogPortal>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete? You cannot go back any further,
+                the decision is permanent
+              </DialogDescription>
+            </DialogHeader>
+            <main className="flex gap-2 justify-end">
+              <Button
+                variant={"outline"}
+                onClick={() => setDeleteStudentModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button>Confirm</Button>
+            </main>
           </DialogContent>
         </DialogPortal>
       </Dialog>
