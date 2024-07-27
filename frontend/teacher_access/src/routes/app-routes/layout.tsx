@@ -4,11 +4,26 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { LayoutGrid, GraduationCap, Bolt, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 export const AppLayout = () => {
   const { pathname } = useLocation();
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleClickSignOut = () => {
+    signOut();
+    navigate("/");
+    toast('Logout Successful', {
+      action: {
+        label: 'Ok',
+        onClick: () => console.log('Ok')
+      },
+    })
+  };
 
   return (
     <main className="flex h-screen">
@@ -27,7 +42,9 @@ export const AppLayout = () => {
                 <TooltipTrigger asChild>
                   <Link
                     to="/"
-                    className={`flex h-9 w-9 items-center justify-center rounded-lg  text-accent-foreground transition-colors hover:text-foreground ${pathname === "/" && "bg-accent"} md:h-10 md:w-10`}
+                    className={`flex h-9 w-9 items-center justify-center rounded-lg  text-accent-foreground transition-colors hover:text-foreground ${
+                      pathname === "/" && "bg-accent"
+                    } md:h-10 md:w-10`}
                   >
                     <LayoutGrid size={24} />
                   </Link>
@@ -51,8 +68,11 @@ export const AppLayout = () => {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <button className="flex justify-center items-center text-accent-foreground transition-colors hover:text-foreground">
-                  <LogOut size={24}  />
+                <button
+                  onClick={handleClickSignOut}
+                  className="flex justify-center items-center text-accent-foreground transition-colors hover:text-foreground"
+                >
+                  <LogOut size={24} />
                 </button>
               </TooltipTrigger>
               <TooltipContent side="right">Logout</TooltipContent>

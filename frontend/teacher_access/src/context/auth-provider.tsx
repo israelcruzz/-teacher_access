@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { AuthContext } from "./auth-context";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
-import { useNavigate, useNavigation, useRoutes } from "react-router-dom";
 
 interface AuthProviderProps {
   children: React.ReactNode;
