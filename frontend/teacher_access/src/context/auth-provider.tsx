@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AuthContext } from "./auth-context";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
+import { useNavigate, useNavigation, useRoutes } from "react-router-dom";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -66,6 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (error) {
       console.log(error);
       toast.error("Internal Server Error");
+      setLoading(false);
     }
   };
 
