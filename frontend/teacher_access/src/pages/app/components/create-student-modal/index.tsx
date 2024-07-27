@@ -120,7 +120,6 @@ export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
               </Select>
 
               <Button className="mt-2">
-                {" "}
                 {loading ? (
                   <span>
                     <LoaderCircle

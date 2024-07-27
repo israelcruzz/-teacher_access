@@ -7,17 +7,36 @@ import {
   DialogPortal,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Dispatch, SetStateAction } from "react";
+import { api } from "@/lib/api";
+import { LoaderCircle } from "lucide-react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { toast } from "sonner";
 
 interface DeleteStudentModalProps {
   deleteStudentModal: boolean;
   setDeleteStudentModal: Dispatch<SetStateAction<boolean>>;
+  deleteStudentId: boolean;
 }
 
 export const DeleteStudentModal = ({
   deleteStudentModal,
   setDeleteStudentModal,
+  deleteStudentId,
 }: DeleteStudentModalProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleClick = async () => {
+    try {
+      setLoading(true);
+      await api.delete(`/teacher/students/${deleteStudentId}`);
+      toast.success("Student Deleted");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Internal Server Error");
+      setLoading(false);
+    }
+  };
+
   return (
     <Dialog open={deleteStudentModal} onOpenChange={setDeleteStudentModal}>
       <DialogPortal>
@@ -36,7 +55,19 @@ export const DeleteStudentModal = ({
             >
               Cancel
             </Button>
-            <Button>Confirm</Button>
+            <Button onClick={handleClick}>
+              {loading ? (
+                <span>
+                  <LoaderCircle
+                    className="animate-spin"
+                    color="#000000"
+                    size={20}
+                  />
+                </span>
+              ) : (
+                "Create"
+              )}
+            </Button>
           </main>
         </DialogContent>
       </DialogPortal>

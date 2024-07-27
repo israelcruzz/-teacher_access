@@ -232,6 +232,7 @@ export const Home = () => {
       <SendLeasonModal courses={courses} />
 
       <DeleteStudentModal
+        deleteStudentId={deleteStudentId}
         deleteStudentModal={deleteStudentModal}
         setDeleteStudentModal={setDeleteStudentModal}
       />
