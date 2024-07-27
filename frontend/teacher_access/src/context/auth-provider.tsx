@@ -138,6 +138,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setToken(undefined);
   };
 
+  const deleteAccount = () => {
+    
+
+    signOut();
+  }
+
   useEffect(() => {
     const user = localStorage.getItem("@user");
     const token = localStorage.getItem("@token");
