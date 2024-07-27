@@ -10,10 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
 import { EditProfile } from "../components/edit-profile";
+import { EditPass } from "../components/edit-pass";
 
 export const Config = () => {
   const { user } = useAuth();
@@ -46,39 +45,7 @@ export const Config = () => {
             </div>
           </section>
 
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline">Change</Button>
-            </DialogTrigger>
-            <DialogPortal>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Change Password</DialogTitle>
-                  <DialogDescription>
-                    Change your password now
-                  </DialogDescription>
-                </DialogHeader>
-                <form className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="pass">Password</Label>
-                    <Input id="pass" type="password" required />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="new_pass">New Password</Label>
-                    <Input id="new_pass" type="password" required />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="confirm_pass">Confirm Password</Label>
-                    <Input id="confirm_pass" type="password" required />
-                  </div>
-
-                  <Button>Change</Button>
-                </form>
-              </DialogContent>
-            </DialogPortal>
-          </Dialog>
+          <EditPass />
         </div>
 
         <Separator />
