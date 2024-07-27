@@ -44,7 +44,15 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
+import { CreateStudentModal } from "../components/create-student-modal";
+
+export interface Course {
+  id: string;
+  name: string;
+  createdAt: Date;
+}
 
 export const Home = () => {
   const [deleteStudentModal, setDeleteStudentModal] = useState<boolean>(false);
@@ -52,6 +60,8 @@ export const Home = () => {
 
   const [deleteStudentId, setDeleteStudentId] = useState<string>("");
   const [editStudentId, setEditStudentId] = useState<string>("");
+
+  const [courses, setCourses] = useState<Course[]>([]);
 
   const handleOpenDeleteStudentModal = (id: string) => {
     setDeleteStudentId(id);
@@ -64,8 +74,14 @@ export const Home = () => {
   };
 
   const fetchCoursesInApi = async () => {
-    
-  }
+    const courses = await api.get("/courses");
+
+    setCourses(courses.data);
+  };
+
+  useEffect(() => {
+    fetchCoursesInApi();
+  }, []);
 
   return (
     <main className="realative w-full py-8 px-6 flex flex-col">
@@ -73,55 +89,7 @@ export const Home = () => {
         <h1 className="text-2xl font-bold">Students</h1>
 
         <div className="flex gap-4">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant={"secondary"}>Add Student</Button>
-            </DialogTrigger>
-            <DialogPortal>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Create Studant</DialogTitle>
-                  <DialogDescription>
-                    Create studant per send leasons
-                  </DialogDescription>
-                </DialogHeader>
-                <form className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="name_student">Name</Label>
-                    <Input
-                      id="name_student"
-                      placeholder="type name for student..."
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="email_student">Email</Label>
-                    <Input
-                      id="email_student"
-                      placeholder="type email for student..."
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="name_leason">Select Course</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Course" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All</SelectItem>
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
-                        <SelectItem value="system">System</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Button className="mt-2">Create</Button>
-                  </div>
-                </form>
-              </DialogContent>
-            </DialogPortal>
-          </Dialog>
+          <CreateStudentModal courses={courses} />
 
           <Select>
             <SelectTrigger className="w-[180px]">
@@ -129,9 +97,12 @@ export const Home = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              {courses &&
+                courses.map((course, i) => (
+                  <SelectItem value={course.id} key={i}>
+                    {course.name}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
 
@@ -250,9 +221,12 @@ export const Home = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    {courses &&
+                      courses.map((course, i) => (
+                        <SelectItem value={course.id} key={i}>
+                          {course.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
 
@@ -317,10 +291,12 @@ export const Home = () => {
                     <SelectValue placeholder="Course" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    {courses &&
+                      courses.map((course, i) => (
+                        <SelectItem value={course.id} key={i}>
+                          {course.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
 
