@@ -31,6 +31,8 @@ export const Invite = () => {
   const [courseId, setCourseId] = useState<string>("");
   const { pathname } = useLocation();
 
+  const id = pathname.split("/").pop();
+
   const formSchema = z.object({
     email: z.string().email(),
     name: z.string().min(3),
@@ -55,12 +57,13 @@ export const Invite = () => {
     try {
       setLoading(true);
       await axios.post(
-        `http://localhost:3033/teacher/${pathname}/student/invite`,
+        `http://localhost:3033/teacher/${id}/student/invite`,
         submitData
       );
       reset();
       toast.success("Created");
       setLoading(false);
+      setCourseId("")
     } catch (error) {
       toast.error("Teacher Invalid");
       setLoading(false);
