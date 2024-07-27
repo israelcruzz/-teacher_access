@@ -67,6 +67,7 @@ export const Home = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [students, setStudents] = useState<Student[]>();
   const [query, setQuery] = useState<string>("");
+  const [course, setCourse] = useState<string>("");
 
   const handleOpenDeleteStudentModal = (id: string) => {
     setDeleteStudentId(id);
@@ -96,15 +97,27 @@ export const Home = () => {
     setStudents(students.data.students);
   };
 
+  const fetchStudentsWithCourseInApi = async () => {
+    if (course === "all") {
+      await fetchStudentsInApi();
+    } else {
+      const students = await api.get(`/teacher/course/${course}/students`);
+      setStudents(students.data.students);
+    }
+  };
+
   useEffect(() => {
     fetchCoursesInApi();
     fetchStudentsInApi();
-    console.log("rodou aki");
   }, []);
 
   useEffect(() => {
     fetchStudentsWithQueryInApi();
   }, [query]);
+
+  useEffect(() => {
+    fetchStudentsWithCourseInApi();
+  }, [course]);
 
   return (
     <main className="realative w-full py-8 px-6 flex flex-col">
@@ -114,7 +127,7 @@ export const Home = () => {
         <div className="flex gap-4">
           <CreateStudentModal courses={courses} />
 
-          <Select>
+          <Select onValueChange={setCourse}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Course" />
             </SelectTrigger>
