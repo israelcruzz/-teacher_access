@@ -8,6 +8,9 @@ export async function findStudentPerCourse(app: FastifyInstance) {
     "/teacher/course/:courseId/students",
     {
       schema: {
+        querystring: z.object({
+          page: z.coerce.number().default(1),
+        }),
         params: z.object({
           courseId: z.string().uuid(),
         }),
@@ -18,6 +21,8 @@ export async function findStudentPerCourse(app: FastifyInstance) {
 
       const teacherId = request.user.sub;
       const { courseId } = request.params;
+      const { page } = request.query;
+      const limitStudentFind = 5;
 
       const existingTeacher = await db.teacher.findUnique({
         where: {
@@ -47,6 +52,8 @@ export async function findStudentPerCourse(app: FastifyInstance) {
         include: {
           course: true,
         },
+        skip: (page - 1) * limitStudentFind,
+        take: limitStudentFind,
       });
 
       return {

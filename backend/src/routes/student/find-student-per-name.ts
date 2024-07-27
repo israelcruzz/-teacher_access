@@ -10,14 +10,16 @@ export async function findStudentsPerName(app: FastifyInstance) {
       schema: {
         querystring: z.object({
           name: z.string(),
+          page: z.coerce.number().default(1),
         }),
       },
     },
     async (request) => {
       await request.jwtVerify();
 
-      const { name } = request.query;
+      const { name, page } = request.query;
       const teacherId = request.user.sub;
+      const limitStudentFind = 5;
 
       const teacher = await db.teacher.findUnique({
         where: {
@@ -39,6 +41,8 @@ export async function findStudentsPerName(app: FastifyInstance) {
         include: {
           course: true,
         },
+        skip: (page - 1) * limitStudentFind,
+        take: 5,
       });
 
       return {
