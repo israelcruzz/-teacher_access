@@ -16,7 +16,7 @@ export async function deleteTeacher(app: FastifyInstance) {
         },
       });
 
-      if (existingTeacherWithSameEmail) {
+      if (!existingTeacherWithSameEmail) {
         throw new Error("Teacher Not Found");
       }
 

@@ -13,9 +13,24 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { EditProfile } from "../components/edit-profile";
 import { EditPass } from "../components/edit-pass";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export const Config = () => {
-  const { user } = useAuth();
+  const { user, deleteAccount } = useAuth();
+
+  const navigate = useNavigate();
+
+  const handleClickDeleteAccount = async () => {
+    await deleteAccount();
+    navigate("/");
+    toast("Account Deleted", {
+      action: {
+        label: "Ok",
+        onClick: () => navigate("/"),
+      },
+    });
+  };
 
   return (
     <main className="w-full px-6 py-8 flex flex-col gap-6">
@@ -85,7 +100,7 @@ export const Config = () => {
                   </DialogDescription>
                 </DialogHeader>
                 <main className="flex gap-2 justify-end">
-                  <Button>Confirm</Button>
+                  <Button onClick={handleClickDeleteAccount}>Confirm</Button>
                 </main>
               </DialogContent>
             </DialogPortal>

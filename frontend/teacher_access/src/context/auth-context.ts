@@ -13,6 +13,7 @@ export interface AuthContextProps {
   signOut: () => void;
   updatePassword: (data: UpdatePassword) => Promise<void>;
   updateInfo: (data: UpdateInfo) => Promise<void>;
+  deleteAccount: () => Promise<void>;
   user: User | undefined;
   token: string | undefined;
   loading: boolean;

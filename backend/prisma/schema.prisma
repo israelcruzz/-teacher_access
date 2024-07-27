@@ -26,7 +26,7 @@ model Student {
   teacherId String
   courseId  String
 
-  teacher Teacher @relation(fields: [teacherId], references: [id])
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   course  Course  @relation(fields: [courseId], references: [id])
 
   @@map("students")

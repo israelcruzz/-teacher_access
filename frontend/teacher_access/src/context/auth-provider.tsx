@@ -138,11 +138,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setToken(undefined);
   };
 
-  const deleteAccount = () => {
-    
-
-    signOut();
-  }
+  const deleteAccount = async () => {
+    try {
+      await api.delete("/teacher");
+      signOut();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const user = localStorage.getItem("@user");
@@ -162,6 +165,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         signOut,
         updatePassword,
         updateInfo,
+        deleteAccount,
         loading,
         token,
         user,
