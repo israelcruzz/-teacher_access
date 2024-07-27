@@ -43,6 +43,9 @@ export async function findStudentsPerName(app: FastifyInstance) {
         },
         skip: (page - 1) * limitStudentFind,
         take: 5,
+        orderBy: {
+          createdAt: "desc",
+        },
       });
 
       return {

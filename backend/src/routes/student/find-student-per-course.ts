@@ -54,6 +54,9 @@ export async function findStudentPerCourse(app: FastifyInstance) {
         },
         skip: (page - 1) * limitStudentFind,
         take: limitStudentFind,
+        orderBy: {
+          createdAt: "desc",
+        },
       });
 
       return {

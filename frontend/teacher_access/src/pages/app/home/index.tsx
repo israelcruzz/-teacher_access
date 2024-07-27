@@ -68,6 +68,7 @@ export const Home = () => {
   const [students, setStudents] = useState<Student[]>();
   const [query, setQuery] = useState<string>("");
   const [course, setCourse] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   const handleOpenDeleteStudentModal = (id: string) => {
     setDeleteStudentId(id);
@@ -86,7 +87,7 @@ export const Home = () => {
   };
 
   const fetchStudentsInApi = async () => {
-    const students = await api.get("/teacher/students");
+    const students = await api.get(`/teacher/students?page=${page}`);
 
     setStudents(students.data.students);
   };
@@ -106,10 +107,26 @@ export const Home = () => {
     }
   };
 
+  const handleIncrementPage = () => {
+    if (page > students?.length! / 5) return;
+
+    setPage((prev) => prev + 1);
+  };
+
+  const handleDecrementPage = () => {
+    if (page === 1) return;
+
+    setPage((prev) => prev - 1);
+  };
+
   useEffect(() => {
     fetchCoursesInApi();
     fetchStudentsInApi();
   }, []);
+
+  useEffect(() => {
+    fetchStudentsInApi();
+  }, [page]);
 
   useEffect(() => {
     fetchStudentsWithQueryInApi();
@@ -214,16 +231,13 @@ export const Home = () => {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <PaginationPrevious onClick={handleDecrementPage} />
             </PaginationItem>
+
+            <PaginationItem>{page}</PaginationItem>
+
             <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationNext onClick={handleIncrementPage} />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
