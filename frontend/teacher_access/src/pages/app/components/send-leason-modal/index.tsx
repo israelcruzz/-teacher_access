@@ -18,37 +18,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Course } from "../../home";
+import { Plus } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
-interface CreateStudentModalProps {
+interface SendLeasonModalProps {
   courses: Course[];
 }
 
-export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
+export const SendLeasonModal = ({ courses }: SendLeasonModalProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"secondary"}>Add Student</Button>
+        <Button className="fixed bottom-0 right-0 m-6">
+          <Plus size={16} />
+        </Button>
       </DialogTrigger>
       <DialogPortal>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create Studant</DialogTitle>
+            <DialogTitle>Send Leason</DialogTitle>
             <DialogDescription>
-              Create studant per send leasons
+              Send the lessons to your students by email
             </DialogDescription>
           </DialogHeader>
           <form className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="name_student">Name</Label>
-              <Input id="name_student" placeholder="type name for student..." />
+              <Label htmlFor="name_leason">Name Leason</Label>
+              <Input id="name_leason" placeholder="type name for leason..." />
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email_student">Email</Label>
-              <Input
-                id="email_student"
-                placeholder="type email for student..."
-              />
+              <Label htmlFor="leason">Name Leason</Label>
+              <Textarea id="leason" placeholder="type leason..." />
             </div>
 
             <div className="flex flex-col gap-2">
@@ -58,6 +59,7 @@ export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
                   <SelectValue placeholder="Course" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all">All</SelectItem>
                   {courses &&
                     courses.map((course, i) => (
                       <SelectItem value={course.id} key={i}>
@@ -67,7 +69,7 @@ export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
                 </SelectContent>
               </Select>
 
-              <Button className="mt-2">Create</Button>
+              <Button className="mt-2">Send</Button>
             </div>
           </form>
         </DialogContent>
