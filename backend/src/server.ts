@@ -22,6 +22,7 @@ import { findCourses } from "./routes/course/find-courses";
 import { sendLeason } from "./routes/teacher/send-leason";
 import multipart from "@fastify/multipart";
 import { deleteTeacher } from "./routes/teacher/delete-teacher";
+import { createStudentInvite } from "./routes/student/create-student-invite";
 
 const app = fastify();
 
@@ -53,6 +54,7 @@ app.register(createCourse);
 app.register(findCourses);
 app.register(sendLeason);
 app.register(deleteTeacher);
+app.register(createStudentInvite)
 
 app
   .listen({ port: env.PORT })

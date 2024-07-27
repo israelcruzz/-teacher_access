@@ -9,14 +9,25 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GraduationCap, LoaderCircle } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useEffect, useState } from "react";
+import { Course } from "@/pages/app/home";
+import axios from "axios";
 
 export const Invite = () => {
-  const { login, loading } = useAuth();
+  const { loading } = useAuth();
+  const [courses, setCourses] = useState<Course[]>();
+  const [courseId, setCourseId] = useState<string>("");
 
   const formSchema = z.object({
     email: z.string().email(),
@@ -28,13 +39,33 @@ export const Invite = () => {
   const { register, handleSubmit, reset } = useForm<formType>();
 
   const handleSubmitForm = async (data: formType) => {
+    if (courseId.length === 0) {
+      toast.error("Select a Course");
+      return;
+    }
+
+    const submitData = {
+      name: data.name,
+      email: data.email,
+      courseId,
+    };
+
     try {
-      
       reset();
     } catch (error) {
       toast.error("Email or Password Invalid");
     }
   };
+
+  const fetchCoursesInApi = async () => {
+    const courses = await axios.get("http://localhost:3033/courses");
+
+    setCourses(courses.data);
+  };
+
+  useEffect(() => {
+    fetchCoursesInApi();
+  }, []);
 
   return (
     <main className="h-screen p-4 md:p-0 max-w-[400px] mx-auto flex justify-center items-center">
@@ -74,6 +105,21 @@ export const Invite = () => {
                 {...register("name", { min: 3, required: true })}
               />
             </div>
+
+            <Label htmlFor="name_leason">Select Course</Label>
+            <Select onValueChange={setCourseId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Course" />
+              </SelectTrigger>
+              <SelectContent>
+                {courses &&
+                  courses.map((course, i) => (
+                    <SelectItem value={course.id} key={i}>
+                      {course.name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
 
             <div className="mt-4">
               <Button disabled={loading} type="submit" className="w-full">
