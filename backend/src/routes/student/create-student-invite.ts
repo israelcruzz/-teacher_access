@@ -5,7 +5,7 @@ import { db } from "../../lib/prisma";
 
 export async function createStudentInvite(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/teacher/:teacherId/student",
+    "/teacher/:teacherId/student/invite",
     {
       schema: {
         body: z.object({

@@ -23,11 +23,13 @@ import {
 import { useEffect, useState } from "react";
 import { Course } from "@/pages/app/home";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 export const Invite = () => {
-  const { loading } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [courses, setCourses] = useState<Course[]>();
   const [courseId, setCourseId] = useState<string>("");
+  const { pathname } = useLocation();
 
   const formSchema = z.object({
     email: z.string().email(),
@@ -51,9 +53,17 @@ export const Invite = () => {
     };
 
     try {
+      setLoading(true);
+      await axios.post(
+        `http://localhost:3033/teacher/${pathname}/student/invite`,
+        submitData
+      );
       reset();
+      toast.success("Created");
+      setLoading(false);
     } catch (error) {
-      toast.error("Email or Password Invalid");
+      toast.error("Teacher Invalid");
+      setLoading(false);
     }
   };
 

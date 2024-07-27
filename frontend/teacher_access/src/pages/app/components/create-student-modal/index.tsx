@@ -23,7 +23,10 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import { LoaderCircle } from "lucide-react";
+import { Copy, LoaderCircle } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import useCopyToClipboard from "react-use-clipboard";
+import { useAuth } from "@/hooks/useAuth";
 
 interface CreateStudentModalProps {
   courses: Course[];
@@ -34,8 +37,11 @@ export const CreateStudentModal = ({
   courses,
   updateStudentsFunction,
 }: CreateStudentModalProps) => {
+  const { user } = useAuth();
   const [courseId, setCourseId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const linkInvite = `http://localhost:5173/invite/${user?.id}`;
+  const [copy, setCopy] = useCopyToClipboard(linkInvite);
 
   const formSchema = z.object({
     name: z.string(),
@@ -69,6 +75,11 @@ export const CreateStudentModal = ({
       toast.error("Internal Server Error");
       setLoading(false);
     }
+  };
+
+  const handleClipCopy = () => {
+    setCopy();
+    toast.success("Link Copied");
   };
 
   return (
@@ -139,6 +150,17 @@ export const CreateStudentModal = ({
               </Button>
             </div>
           </form>
+
+          <Separator />
+
+          <Button
+            onClick={handleClipCopy}
+            variant={"outline"}
+            className="flex gap-2 items-center justify-center"
+          >
+            Invite student via link
+            <Copy size={16} />
+          </Button>
         </DialogContent>
       </DialogPortal>
     </Dialog>
