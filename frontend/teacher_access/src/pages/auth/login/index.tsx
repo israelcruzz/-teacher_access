@@ -9,35 +9,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LoaderCircle } from "lucide-react";
-import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "@/hooks/useAuth";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export const Login = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const { login, loading } = useAuth();
 
-  const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const formSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(8),
+  });
 
-    setLoading(true);
+  type formType = z.infer<typeof formSchema>;
 
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get("email");
-    const password = formData.get("pass");
+  const { register, handleSubmit, reset } = useForm<formType>();
 
+  const handleSubmitForm = async (data: formType) => {
     try {
-      const teacher = await axios.post("http://localhost:3033/auth", {
-        email,
-        password,
-      });
-
-      console.log(teacher.data);
-
-      setLoading(false);
+      await login(data);
+      reset();
     } catch (error) {
-      console.log(error);
-      toast.error("Internal Server Error");
+      toast.error("Email or Password Invalid");
     }
   };
 
@@ -51,15 +46,18 @@ export const Login = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="flex flex-col gap-4" onSubmit={handleSubmitForm}>
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={handleSubmit(handleSubmitForm)}
+          >
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                name="email"
                 type="email"
                 placeholder="m@example.com"
                 required
+                {...register("email", { required: true })}
               />
             </div>
 
@@ -68,9 +66,9 @@ export const Login = () => {
               <Input
                 id="password"
                 type="password"
-                name="pass"
                 placeholder="type your password"
                 required
+                {...register("password", { min: 8 })}
               />
             </div>
 

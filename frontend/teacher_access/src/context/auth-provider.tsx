@@ -89,7 +89,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("Internal Server Error");
+      toast.error("Email or Password Invalid");
+      setLoading(false);
     }
   };
 
