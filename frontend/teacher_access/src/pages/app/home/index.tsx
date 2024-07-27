@@ -10,7 +10,6 @@ import { Plus, Search, Ellipsis } from "lucide-react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -53,7 +52,54 @@ export const Home = () => {
         <h1 className="text-2xl font-bold">Students</h1>
 
         <div className="flex gap-4">
-          <Button variant={"secondary"}>Add Student</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant={"secondary"}>Add Student</Button>
+            </DialogTrigger>
+            <DialogPortal>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Create Studant</DialogTitle>
+                  <DialogDescription>Create studant per send leasons</DialogDescription>
+                </DialogHeader>
+                <form className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="name_student">Name</Label>
+                    <Input
+                      id="name_student"
+                      placeholder="type name for student..."
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="email_student">Email</Label>
+                    <Input
+                      id="email_student"
+                      placeholder="type email for student..."
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="name_leason">Select Course</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Course" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="light">Light</SelectItem>
+                        <SelectItem value="dark">Dark</SelectItem>
+                        <SelectItem value="system">System</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    <Button className="mt-2">Create</Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
+
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Course" />
@@ -150,7 +196,7 @@ export const Home = () => {
                 Send the lessons to your students by email
               </DialogDescription>
             </DialogHeader>
-            <main className="flex flex-col gap-4">
+            <form className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name_leason">Name Leason</Label>
                 <Input id="name_leason" placeholder="type name for leason..." />
@@ -163,22 +209,21 @@ export const Home = () => {
 
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name_leason">Select Course</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Course" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
-                </SelectContent>
-              </Select>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Course" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="light">Light</SelectItem>
+                    <SelectItem value="dark">Dark</SelectItem>
+                    <SelectItem value="system">System</SelectItem>
+                  </SelectContent>
+                </Select>
 
-              <Button className="mt-2">Send</Button>
+                <Button className="mt-2">Send</Button>
               </div>
-              
-            </main>
+            </form>
           </DialogContent>
         </DialogPortal>
       </Dialog>
