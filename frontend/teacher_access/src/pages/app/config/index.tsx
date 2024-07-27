@@ -12,8 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Config = () => {
+  const { user } = useAuth();
+
   return (
     <main className="w-full px-6 py-8 flex flex-col gap-6">
       <header>
@@ -28,8 +31,8 @@ export const Config = () => {
         </Avatar>
 
         <section>
-          <h1>Israel Cruz</h1>
-          <p>israelcruz@dev.com</p>
+          <h1>{user?.name}</h1>
+          <p>{user?.email}</p>
         </section>
       </div>
 
