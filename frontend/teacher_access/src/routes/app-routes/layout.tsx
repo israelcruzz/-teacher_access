@@ -45,7 +45,7 @@ export const AppLayout = () => {
                     <Bolt size={24} />
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Configuration</TooltipContent>
+                <TooltipContent side="right">Settings</TooltipContent>
               </Tooltip>
             </div>
 
