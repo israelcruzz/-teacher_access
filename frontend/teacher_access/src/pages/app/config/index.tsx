@@ -69,7 +69,7 @@ export const Config = () => {
                     <Label htmlFor="confirm_pass">Confirm Password</Label>
                     <Input id="confirm_pass" type="password" required />
                   </div>
-                  
+
                   <Button>Change</Button>
                 </form>
               </DialogContent>
@@ -87,7 +87,34 @@ export const Config = () => {
             </div>
           </section>
 
-          <Button variant="outline">Change</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Change</Button>
+            </DialogTrigger>
+            <DialogPortal>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Change Information</DialogTitle>
+                  <DialogDescription>
+                    Change your account information
+                  </DialogDescription>
+                </DialogHeader>
+                <form className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="new_name">New Name</Label>
+                    <Input id="new_name" type="text" required />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="new_email">New Email</Label>
+                    <Input id="new_email" type="text" required />
+                  </div>
+
+                  <Button>Change</Button>
+                </form>
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
         </div>
 
         <Separator />
