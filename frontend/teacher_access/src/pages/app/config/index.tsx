@@ -1,6 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export const Config = () => {
   return (
@@ -31,7 +42,39 @@ export const Config = () => {
             </div>
           </section>
 
-          <Button variant="outline">Change</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Change</Button>
+            </DialogTrigger>
+            <DialogPortal>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Change Password</DialogTitle>
+                  <DialogDescription>
+                    Change your password now
+                  </DialogDescription>
+                </DialogHeader>
+                <form className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="pass">Password</Label>
+                    <Input id="pass" type="password" required />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="new_pass">New Password</Label>
+                    <Input id="new_pass" type="password" required />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="confirm_pass">Confirm Password</Label>
+                    <Input id="confirm_pass" type="password" required />
+                  </div>
+                  
+                  <Button>Change</Button>
+                </form>
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
         </div>
 
         <Separator />
