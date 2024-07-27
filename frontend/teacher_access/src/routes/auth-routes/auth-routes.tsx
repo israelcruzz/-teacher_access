@@ -1,3 +1,4 @@
+import { Invite } from "@/pages/auth/invite";
 import { Login } from "@/pages/auth/login";
 import { Register } from "@/pages/auth/register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />
+  },
+  {
+    path: "/invite/:teacherId",
+    element: <Invite />
   },
 ]);
 

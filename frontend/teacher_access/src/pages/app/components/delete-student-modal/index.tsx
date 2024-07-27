@@ -16,12 +16,14 @@ interface DeleteStudentModalProps {
   deleteStudentModal: boolean;
   setDeleteStudentModal: Dispatch<SetStateAction<boolean>>;
   deleteStudentId: string;
+  updateStudentsFunction: () => Promise<void>;
 }
 
 export const DeleteStudentModal = ({
   deleteStudentModal,
   setDeleteStudentModal,
   deleteStudentId,
+  updateStudentsFunction,
 }: DeleteStudentModalProps) => {
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -31,6 +33,8 @@ export const DeleteStudentModal = ({
       await api.delete(`/teacher/students/${deleteStudentId}`);
       toast.success("Student Deleted");
       setLoading(false);
+      await updateStudentsFunction();
+      setDeleteStudentModal(false);
     } catch (error) {
       toast.error("Internal Server Error");
       setLoading(false);

@@ -27,9 +27,13 @@ import { LoaderCircle } from "lucide-react";
 
 interface CreateStudentModalProps {
   courses: Course[];
+  updateStudentsFunction: () => Promise<void>;
 }
 
-export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
+export const CreateStudentModal = ({
+  courses,
+  updateStudentsFunction,
+}: CreateStudentModalProps) => {
   const [courseId, setCourseId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -60,6 +64,7 @@ export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
       toast.success("Student Created");
       reset();
       setLoading(false);
+      await updateStudentsFunction();
     } catch (error) {
       toast.error("Internal Server Error");
       setLoading(false);

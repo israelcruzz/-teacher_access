@@ -140,7 +140,7 @@ export const Home = () => {
         <h1 className="text-2xl font-bold">Students</h1>
 
         <div className="flex gap-4">
-          <CreateStudentModal courses={courses} />
+          <CreateStudentModal courses={courses} updateStudentsFunction={fetchStudentsInApi} />
 
           <Select onValueChange={setCourse}>
             <SelectTrigger className="w-[180px]">
@@ -247,6 +247,7 @@ export const Home = () => {
         deleteStudentId={deleteStudentId}
         deleteStudentModal={deleteStudentModal}
         setDeleteStudentModal={setDeleteStudentModal}
+        updateStudentsFunction={fetchStudentsInApi}
       />
 
       <EditStudentModalProps
@@ -254,6 +255,7 @@ export const Home = () => {
         editStudentModal={editStudentModal}
         courses={courses}
         setEditStudentModal={setEditStudentModal}
+        updateStudentsFunction={fetchStudentsInApi}
       />
     </main>
   );

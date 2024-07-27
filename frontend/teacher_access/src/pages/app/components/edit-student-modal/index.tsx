@@ -29,6 +29,7 @@ interface EditStudentModalProps {
   editStudentModal: boolean;
   setEditStudentModal: Dispatch<SetStateAction<boolean>>;
   editStudentId: string;
+  updateStudentsFunction: () => Promise<void>;
 }
 
 export const EditStudentModalProps = ({
@@ -36,6 +37,7 @@ export const EditStudentModalProps = ({
   editStudentModal,
   setEditStudentModal,
   editStudentId,
+  updateStudentsFunction,
 }: EditStudentModalProps) => {
   const formSchema = z.object({
     name: z.string().min(3),
@@ -67,6 +69,7 @@ export const EditStudentModalProps = ({
       reset();
       toast.success("Student Updated");
       setLoading(false);
+      await updateStudentsFunction();
     } catch (error) {
       toast.error("Internal Server Error");
       setLoading(false);
