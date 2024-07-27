@@ -43,11 +43,11 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { CreateStudentModal } from "../components/create-student-modal";
 import { SendLeasonModal } from "../components/send-leason-modal";
+import { EditStudentModalProps } from "../components/edit-student-modal";
 
 export interface Course {
   id: string;
@@ -214,52 +214,11 @@ export const Home = () => {
         </DialogPortal>
       </Dialog>
 
-      <Dialog open={editStudentModal} onOpenChange={setEditStudentModal}>
-        <DialogPortal>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Edit Studant</DialogTitle>
-              <DialogDescription>Make student info</DialogDescription>
-            </DialogHeader>
-            <form className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name_student">Name</Label>
-                <Input
-                  id="name_student"
-                  placeholder="type name for student..."
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="email_student">Email</Label>
-                <Input
-                  id="email_student"
-                  placeholder="type email for student..."
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name_leason">Select Course</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Course" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {courses &&
-                      courses.map((course, i) => (
-                        <SelectItem value={course.id} key={i}>
-                          {course.name}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-
-                <Button className="mt-2">Update</Button>
-              </div>
-            </form>
-          </DialogContent>
-        </DialogPortal>
-      </Dialog>
+      <EditStudentModalProps
+        editStudentModal={editStudentModal}
+        courses={courses}
+        setEditStudentModal={setEditStudentModal}
+      />
     </main>
   );
 };
