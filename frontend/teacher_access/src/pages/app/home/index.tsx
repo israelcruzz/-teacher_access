@@ -48,11 +48,19 @@ import { useState } from "react";
 
 export const Home = () => {
   const [deleteStudentModal, setDeleteStudentModal] = useState<boolean>(false);
+  const [editStudentModal, setEditStudentModal] = useState<boolean>(false);
+
   const [deleteStudentId, setDeleteStudentId] = useState<string>("");
+  const [editStudentId, setEditStudentId] = useState<string>("");
 
   const handleOpenDeleteStudentModal = (id: string) => {
     setDeleteStudentId(id);
     setDeleteStudentModal(true);
+  };
+
+  const handleOpenEditStudentModal = (id: string) => {
+    setEditStudentId(id);
+    setEditStudentModal(true);
   };
 
   return (
@@ -162,9 +170,17 @@ export const Home = () => {
                       <DropdownMenuContent>
                         <DropdownMenuLabel>Israel Cruz</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
                         <DropdownMenuItem
-                          onClick={() => handleOpenDeleteStudentModal(i.toString())}
+                          onClick={() =>
+                            handleOpenEditStudentModal(i.toString())
+                          }
+                        >
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            handleOpenDeleteStudentModal(i.toString())
+                          }
                         >
                           Delete
                         </DropdownMenuItem>
@@ -244,7 +260,6 @@ export const Home = () => {
       </Dialog>
 
       <Dialog open={deleteStudentModal} onOpenChange={setDeleteStudentModal}>
-        <DialogTrigger asChild></DialogTrigger>
         <DialogPortal>
           <DialogContent>
             <DialogHeader>
@@ -263,6 +278,51 @@ export const Home = () => {
               </Button>
               <Button>Confirm</Button>
             </main>
+          </DialogContent>
+        </DialogPortal>
+      </Dialog>
+
+      <Dialog open={editStudentModal} onOpenChange={setEditStudentModal}>
+        <DialogPortal>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit Studant</DialogTitle>
+              <DialogDescription>Make student info</DialogDescription>
+            </DialogHeader>
+            <form className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="name_student">Name</Label>
+                <Input
+                  id="name_student"
+                  placeholder="type name for student..."
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="email_student">Email</Label>
+                <Input
+                  id="email_student"
+                  placeholder="type email for student..."
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="name_leason">Select Course</Label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Course" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="light">Light</SelectItem>
+                    <SelectItem value="dark">Dark</SelectItem>
+                    <SelectItem value="system">System</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button className="mt-2">Update</Button>
+              </div>
+            </form>
           </DialogContent>
         </DialogPortal>
       </Dialog>
