@@ -43,9 +43,7 @@ export interface ResponseLogin {
 }
 
 export interface ResponseFindTeacher {
-  data: {
-    teacher: User;
-  };
+  data: User;
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
@@ -102,11 +100,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       await api.patch("/teacher", data);
       const teacherUpdated = (await api.get("/teacher")) as ResponseFindTeacher;
 
-      localStorage.setItem(
-        "@user",
-        JSON.stringify(teacherUpdated.data.teacher)
-      );
-      setUser(teacherUpdated.data.teacher);
+      localStorage.setItem("@user", JSON.stringify(teacherUpdated.data));
+      setUser(teacherUpdated.data);
 
       toast.success("Password Changed");
       setLoading(false);
@@ -123,17 +118,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       await api.put("/teacher", data);
       const teacherUpdated = (await api.get("/teacher")) as ResponseFindTeacher;
 
-      localStorage.setItem(
-        "@user",
-        JSON.stringify(teacherUpdated.data.teacher)
-      );
-      setUser(teacherUpdated.data.teacher);
+      localStorage.setItem("@user", JSON.stringify(teacherUpdated.data));
+      setUser(teacherUpdated.data);
 
       toast.success("Info Changed");
       setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("Internal Server Error");
+      setLoading(false);
     }
   };
 

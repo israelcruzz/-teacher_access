@@ -11,8 +11,8 @@ export interface AuthContextProps {
   register: (data: RegisterTeacher) => Promise<void>;
   login: (data: LoginTeacher) => Promise<void>;
   signOut: () => void;
-  updatePassword: (data: UpdatePassword) => void;
-  updateInfo: (data: UpdateInfo) => void;
+  updatePassword: (data: UpdatePassword) => Promise<void>;
+  updateInfo: (data: UpdateInfo) => Promise<void>;
   user: User | undefined;
   token: string | undefined;
   loading: boolean;

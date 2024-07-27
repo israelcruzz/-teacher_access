@@ -13,6 +13,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
+import { EditProfile } from "../components/edit-profile";
 
 export const Config = () => {
   const { user } = useAuth();
@@ -90,34 +91,7 @@ export const Config = () => {
             </div>
           </section>
 
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline">Change</Button>
-            </DialogTrigger>
-            <DialogPortal>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Change Information</DialogTitle>
-                  <DialogDescription>
-                    Change your account information
-                  </DialogDescription>
-                </DialogHeader>
-                <form className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="new_name">New Name</Label>
-                    <Input id="new_name" type="text" required />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <Label htmlFor="new_email">New Email</Label>
-                    <Input id="new_email" type="text" required />
-                  </div>
-
-                  <Button>Change</Button>
-                </form>
-              </DialogContent>
-            </DialogPortal>
-          </Dialog>
+          <EditProfile />
         </div>
 
         <Separator />
