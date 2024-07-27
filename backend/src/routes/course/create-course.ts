@@ -14,6 +14,8 @@ export async function createCourse(app: FastifyInstance) {
       },
     },
     async (request) => {
+      await request.jwtVerify();
+
       const { name } = request.body;
 
       const existingCourseWithSameName = await db.course.findFirst({

@@ -63,6 +63,10 @@ export const Home = () => {
     setEditStudentModal(true);
   };
 
+  const fetchCoursesInApi = async () => {
+    
+  }
+
   return (
     <main className="realative w-full py-8 px-6 flex flex-col">
       <header className="flex justify-between items-center">
