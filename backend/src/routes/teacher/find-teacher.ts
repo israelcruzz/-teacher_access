@@ -16,6 +16,7 @@ export async function findTeacher(app: FastifyInstance) {
         id: true,
         name: true,
         email: true,
+        createdAt: true
       },
     });
 
