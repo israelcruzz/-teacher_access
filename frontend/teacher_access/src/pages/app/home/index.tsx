@@ -36,7 +36,8 @@ import { api } from "@/lib/api";
 import { CreateStudentModal } from "../components/create-student-modal";
 import { SendLeasonModal } from "../components/send-leason-modal";
 import { EditStudentModalProps } from "../components/edit-student-modal";
-import { DeleteStudentModal } from "../components/delete-student-moda";
+import { DeleteStudentModal } from "../components/delete-student-modal";
+import dayjs from "dayjs";
 
 export interface Course {
   id: string;
@@ -44,14 +45,28 @@ export interface Course {
   createdAt: Date;
 }
 
+export interface Student {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+  courseName: string;
+}
+
+export interface StudentResponse {
+  data: {
+    students: Student[];
+  };
+}
+
 export const Home = () => {
   const [deleteStudentModal, setDeleteStudentModal] = useState<boolean>(false);
   const [editStudentModal, setEditStudentModal] = useState<boolean>(false);
-
   const [deleteStudentId, setDeleteStudentId] = useState<string>("");
   const [editStudentId, setEditStudentId] = useState<string>("");
-
   const [courses, setCourses] = useState<Course[]>([]);
+  const [students, setStudents] = useState<Student[]>();
+  console.log(students);
 
   const handleOpenDeleteStudentModal = (id: string) => {
     setDeleteStudentId(id);
@@ -69,8 +84,15 @@ export const Home = () => {
     setCourses(courses.data);
   };
 
+  const fetchStudentsInApi = async () => {
+    const students = await api.get("/teacher/students");
+
+    setStudents(students.data.students);
+  };
+
   useEffect(() => {
     fetchCoursesInApi();
+    fetchStudentsInApi();
   }, []);
 
   return (
@@ -118,43 +140,48 @@ export const Home = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 5 }).map((_, i) => {
-              return (
-                <TableRow key={i}>
-                  <TableCell className="font-medium">Israel Cruz</TableCell>
-                  <TableCell>israel@dev.com</TableCell>
-                  <TableCell>TI</TableCell>
-                  <TableCell>24/03/2020</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <button className="flex justify-center items-center  rounded-md p-1">
-                          <Ellipsis />
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuLabel>Israel Cruz</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          onClick={() =>
-                            handleOpenEditStudentModal(i.toString())
-                          }
-                        >
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() =>
-                            handleOpenDeleteStudentModal(i.toString())
-                          }
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {students &&
+              students.map((student, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell className="font-medium">
+                      {student.name}
+                    </TableCell>
+                    <TableCell>{student.email}</TableCell>
+                    <TableCell>{student.courseName}</TableCell>
+                    <TableCell>
+                      {dayjs(student.createdAt).format("DD/MM/YYYY")}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="flex justify-center items-center  rounded-md p-1">
+                            <Ellipsis />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuLabel>Israel Cruz</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleOpenEditStudentModal(student.id)
+                            }
+                          >
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() =>
+                              handleOpenDeleteStudentModal(student.id)
+                            }
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </div>
