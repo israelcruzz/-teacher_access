@@ -18,12 +18,54 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Course } from "../../home";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { toast } from "sonner";
+import { api } from "@/lib/api";
+import { LoaderCircle } from "lucide-react";
 
 interface CreateStudentModalProps {
   courses: Course[];
 }
 
 export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
+  const [courseId, setCourseId] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const formSchema = z.object({
+    name: z.string(),
+    email: z.string().email(),
+  });
+
+  type formType = z.infer<typeof formSchema>;
+
+  const { register, handleSubmit, reset } = useForm<formType>();
+
+  const handleSubmitForm = async (data: formType) => {
+    if (courseId.length === 0) {
+      toast.error("Select a Course");
+      return;
+    }
+
+    const submitData = {
+      name: data.name,
+      email: data.email,
+      courseId,
+    };
+
+    try {
+      setLoading(true);
+      await api.post("/teacher/student", submitData);
+      toast.success("Student Created");
+      reset();
+      setLoading(false);
+    } catch (error) {
+      toast.error("Internal Server Error");
+      setLoading(false);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -37,15 +79,25 @@ export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
               Create studant per send leasons
             </DialogDescription>
           </DialogHeader>
-          <form className="flex flex-col gap-4">
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={handleSubmit(handleSubmitForm)}
+          >
             <div className="flex flex-col gap-2">
               <Label htmlFor="name_student">Name</Label>
-              <Input id="name_student" placeholder="type name for student..." />
+              <Input
+                {...register("name", { min: 3 })}
+                required
+                id="name_student"
+                placeholder="type name for student..."
+              />
             </div>
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="email_student">Email</Label>
               <Input
+                {...register("email", { required: true })}
+                required
                 id="email_student"
                 placeholder="type email for student..."
               />
@@ -53,7 +105,7 @@ export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="name_leason">Select Course</Label>
-              <Select>
+              <Select onValueChange={setCourseId}>
                 <SelectTrigger>
                   <SelectValue placeholder="Course" />
                 </SelectTrigger>
@@ -67,7 +119,20 @@ export const CreateStudentModal = ({ courses }: CreateStudentModalProps) => {
                 </SelectContent>
               </Select>
 
-              <Button className="mt-2">Create</Button>
+              <Button className="mt-2">
+                {" "}
+                {loading ? (
+                  <span>
+                    <LoaderCircle
+                      className="animate-spin"
+                      color="#000000"
+                      size={20}
+                    />
+                  </span>
+                ) : (
+                  "Create"
+                )}
+              </Button>
             </div>
           </form>
         </DialogContent>
