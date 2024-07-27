@@ -2,4 +2,4 @@ import { createContext } from "react";
 
 interface AuthContext {}
 
-const AuthContext = createContext({} as AuthContext )
+export const AuthContext = createContext({} as AuthContext )
